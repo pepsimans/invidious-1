@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+
+  invidious-server:
+    image: quay.io/invidious/invidious
+    hostname: invidious
+    networks:
+      - traefik-public
+      - database-backend
+#    logging:
+#      driver: none
+    deploy:
+      mode: replicated
+      replicas: 4
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+        monitor: 10s
+      rollback_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+        monitor: 10s 
+    environment:
+      INVIDIOUS_CONFIG: |
+        channel_threads: 4
+        check_tables: true
+        feed_threads: 4
+        db:
+          user: kemal
+          password: ${DATABASE_PASSWORD}
+          host: invidious-database
+          port: 5432
+          dbname: invidious
+        full_refresh: false
+        https_only: true
+        domain: https://${INVIDIOUS_HOSTNAME}/
+        popular_enabled: true
+        login_enabled: true
+        registration_enabled: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+
+      # Access Router
+      - "traefik.http.routers.invidious.rule=Host(`${INVIDIOUS_HOSTNAME}`)"
+      - "traefik.http.routers.invidious.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.invidious.entrypoints=websecure"
+      - "traefik.http.routers.invidious.middlewares=invidious-headers"
+
+      # CSP Header middleware
+      - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src blob:"
+
+networks:
+  traefik-public:
+    external: true
+  database-backend:
+    external: true
