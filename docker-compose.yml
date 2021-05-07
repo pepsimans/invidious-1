@@ -2,8 +2,43 @@ version: '3.8'
 
 services:
 
+  invidious-database:
+    image: postgres:13-alpine
+    hostname: database
+    volumes:
+      - invidious-database:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - database-backend
+    deploy:
+      placement:
+        constraints:
+          - node.labels.database-server == true
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+        monitor: 10s
+      rollback_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+        monitor: 10s 
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U, "kemal"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      POSTGRES_DB: invidious
+      POSTGRES_USER: kemal
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
   invidious-server:
-    image: quay.io/invidious/invidious
+    image: quay.io/invidious/invidious:latest
     hostname: invidious
     networks:
       - traefik-public
@@ -33,7 +68,7 @@ services:
         db:
           user: kemal
           password: ${DATABASE_PASSWORD}
-          host: invidious-database
+          host: database
           port: 5432
           dbname: invidious
         full_refresh: false
@@ -59,4 +94,4 @@ networks:
   traefik-public:
     external: true
   database-backend:
-    external: true
+    driver: overlay
