@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
 
-  invidious-database:
+  database:
     image: postgres:13-alpine
     hostname: database
     volumes:
@@ -37,7 +37,7 @@ services:
       POSTGRES_USER: kemal
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
 
-  invidious-server:
+  server:
     image: quay.io/invidious/invidious:latest
     hostname: invidious
     networks:
