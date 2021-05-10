@@ -77,6 +77,10 @@ services:
         popular_enabled: true
         login_enabled: true
         registration_enabled: true
+        statistics_enabled: true
+        default_user_preferences:
+          dark_mode; true
+          quality: dash
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
