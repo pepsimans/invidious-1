@@ -27,7 +27,7 @@ services:
         order: stop-first
         monitor: 10s 
     healthcheck:
-      test: ["CMD", "pg_isready", "-U, "kemal"]
+      test: ["CMD", "pg_isready", "-U, "invidious"]
       interval: 1m30s
       timeout: 10s
       retries: 3
