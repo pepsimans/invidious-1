@@ -79,7 +79,7 @@ services:
         registration_enabled: true
         statistics_enabled: true
         default_user_preferences:
-          dark_mode; true
+          dark_mode: true
           quality: dash
     labels:
       - "traefik.enable=true"
