@@ -6,7 +6,7 @@ services:
     image: postgres:13-alpine
     hostname: database
     volumes:
-      - invidious-database:/var/lib/postgresql/data
+      - ./invidious-database:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
     networks:
       - database-backend
@@ -99,7 +99,3 @@ networks:
     external: true
   database-backend:
     driver: overlay
-
-volumes:
-  invidious-database:
-    external: true
