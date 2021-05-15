@@ -26,12 +26,6 @@ services:
         delay: 10s
         order: stop-first
         monitor: 10s 
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "kemal", "-d", "invidious"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
     environment:
       POSTGRES_DB: invidious
       POSTGRES_USER: kemal
@@ -47,7 +41,7 @@ services:
 #      driver: none
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 3
       restart_policy:
         condition: any
       update_config:
@@ -59,7 +53,19 @@ services:
         parallelism: 2
         delay: 10s
         order: stop-first
-        monitor: 10s 
+        monitor: 10s
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-public"
+  
+        # Access Router
+        - "traefik.http.routers.invidious.rule=Host(`${INVIDIOUS_HOSTNAME}`)"
+        - "traefik.http.routers.invidious.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.invidious.entrypoints=websecure"
+        - "traefik.http.routers.invidious.middlewares=invidious-headers"
+  
+        # CSP Header middleware
+        - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src blob:"
     environment:
       INVIDIOUS_CONFIG: |
         channel_threads: 4
@@ -81,18 +87,6 @@ services:
         default_user_preferences:
           dark_mode: true
           quality: dash
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik-public"
-
-      # Access Router
-      - "traefik.http.routers.invidious.rule=Host(`${INVIDIOUS_HOSTNAME}`)"
-      - "traefik.http.routers.invidious.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.invidious.entrypoints=websecure"
-      - "traefik.http.routers.invidious.middlewares=invidious-headers"
-
-      # CSP Header middleware
-      - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src blob:"
 
 networks:
   traefik-public:
