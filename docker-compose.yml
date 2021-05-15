@@ -67,6 +67,8 @@ services:
 
         # Service
         - "traefik.http.services.invidious-service.loadbalancer.server.port=3000"
+        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
+        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
   
         # CSP Header middleware
         - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src blob:"
