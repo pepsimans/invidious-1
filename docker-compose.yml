@@ -35,9 +35,9 @@ services:
     image: quay.io/invidious/invidious:latest
     hostname: invidious
     networks:
-      database-backend:
       backend:
         ipv4_address: 10.0.110.3
+      database-backend:
 #    logging:
 #      driver: none
     deploy:
@@ -81,9 +81,9 @@ services:
     image: owasp/modsecurity-crs:v3.3.0-nginx
     hostname: modsecurity
     networks:
-      traefik-public:
       backend:
         ipv4_address: 10.0.110.2
+      traefik-public:
     deploy:
       mode: replicated
       replicas: 3
