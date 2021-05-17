@@ -36,6 +36,7 @@ services:
     hostname: invidious
     networks:
       - database-backend
+      - traefik-public
 #    logging:
 #      driver: none
     deploy:
