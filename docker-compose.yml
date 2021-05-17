@@ -37,8 +37,7 @@ services:
     networks:
       database-backend:
       backend:
-        vpcbr:
-          ipv4_address: 10.0.110.4
+        ipv4_address: 10.0.110.4
 #    logging:
 #      driver: none
     deploy:
@@ -84,8 +83,7 @@ services:
     networks:
       traefik-public:
       backend:
-        vpcbr:
-          ipv4_address: 10.0.110.13
+        ipv4_address: 10.0.110.13
     deploy:
       mode: replicated
       replicas: 3
