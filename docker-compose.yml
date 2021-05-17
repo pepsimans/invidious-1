@@ -37,7 +37,7 @@ services:
     networks:
       database-backend:
       backend:
-        ipv4_address: 10.0.110.4
+        ipv4_address: 10.0.110.3
 #    logging:
 #      driver: none
     deploy:
@@ -83,7 +83,7 @@ services:
     networks:
       traefik-public:
       backend:
-        ipv4_address: 10.0.110.13
+        ipv4_address: 10.0.110.2
     deploy:
       mode: replicated
       replicas: 3
@@ -120,7 +120,7 @@ services:
     environment:
       PARANOIA: 2
       PROXY: 1
-      UPSTREAM: 10.0.110.4:3000
+      UPSTREAM: 10.0.110.3:3000
       SERVERNAME: ${INVIDIOUS_HOSTNAME}
     
 networks:
