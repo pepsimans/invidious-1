@@ -1,8 +1,8 @@
 [
   {
       "name": "IP limit, all paths",
-      "interval": 15,
-      "limit": 50,
+      "interval": 2,
+      "limit": 25,
       "aggregations": ["Header:X-Forwarded-For"],
       "actions": [
           {"name": "block",
