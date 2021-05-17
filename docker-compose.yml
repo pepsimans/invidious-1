@@ -35,8 +35,10 @@ services:
     image: quay.io/invidious/invidious:latest
     hostname: invidious
     networks:
-      - database-backend
-      - backend
+      database-backend:
+      backend:
+        vpcbr:
+          ipv4_address: 10.0.110.4
 #    logging:
 #      driver: none
     deploy:
@@ -80,8 +82,10 @@ services:
     image: owasp/modsecurity-crs:v3.3.0-nginx
     hostname: modsecurity
     networks:
-      - traefik-public
-      - backend
+      traefik-public:
+      backend:
+        vpcbr:
+          ipv4_address: 10.0.110.13
     deploy:
       mode: replicated
       replicas: 3
@@ -118,7 +122,7 @@ services:
     environment:
       PARANOIA: 2
       PROXY: 1
-      UPSTREAM: invidious:3000
+      UPSTREAM: 10.0.110.4:3000
       SERVERNAME: ${INVIDIOUS_HOSTNAME}
     
 networks:
@@ -128,3 +132,7 @@ networks:
     driver: overlay
   backend:
     driver: overlay
+    ipam:
+      config:
+        - subnet: 10.0.110.0/24
+          gateway: 10.0.110.1
