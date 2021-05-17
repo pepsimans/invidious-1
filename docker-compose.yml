@@ -113,11 +113,11 @@ services:
         # CSP Header middleware
         - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src blob:" 
     environment:
-      PARANOIA=1
-      ANOMALY_INBOUND=500
-      ANOMALY_OUTBOUND=400
-      PORT=8080
-      BACKEND=http://server:3000/
+      PARANOIA: 1
+      ANOMALY_INBOUND: 500
+      ANOMALY_OUTBOUND: 400
+      PORT: 8080
+      BACKEND: http://server:3000/
     
 networks:
   traefik-public:
