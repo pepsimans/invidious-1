@@ -1,0 +1,24 @@
+[
+  {
+      "name": "IP limit, all paths",
+      "interval": 3,
+      "limit": 25,
+      "aggregations": ["Header:X-Forwarded-For"],
+      "actions": [
+          {"name": "block",
+           "params": {"message": "Rate limit exceeded, try again later."}}
+      ]
+  },
+  {
+      "name": "useragent limit, all paths",
+      "interval": 30,
+      "limit": 200,
+      "aggregations": ["Header:X-Forwarded-For", "Header:User-Agent"],
+      "stop": true,
+      "actions": [
+          {"name": "block",
+           "params": {"message": "Rate limit exceeded, try again later."}}
+      ]
+  }
+
+]
