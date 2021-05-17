@@ -4,7 +4,6 @@ services:
 
   database:
     image: postgres:13-alpine
-    hostname: database
     volumes:
       - ./invidious-database:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
@@ -33,11 +32,9 @@ services:
 
   server:
     image: quay.io/invidious/invidious:latest
-    hostname: invidious
     networks:
-      backend:
-        ipv4_address: 10.0.110.3
-      database-backend:
+      - backend
+      - database-backend
 #    logging:
 #      driver: none
     deploy:
@@ -79,11 +76,9 @@ services:
 
   modsecurity:
     image: owasp/modsecurity-crs:v3.3.0-nginx
-    hostname: modsecurity
     networks:
-      backend:
-        ipv4_address: 10.0.110.2
-      traefik-public:
+      - backend
+      - traefik-public
     deploy:
       mode: replicated
       replicas: 3
@@ -120,7 +115,7 @@ services:
     environment:
       PARANOIA: 2
       PROXY: 1
-      UPSTREAM: 10.0.110.3:3000
+      UPSTREAM: server:3000
       SERVERNAME: ${INVIDIOUS_HOSTNAME}
     
 networks:
@@ -130,6 +125,3 @@ networks:
     driver: overlay
   backend:
     driver: overlay
-    ipam:
-      config:
-        - subnet: 10.0.110.0/24
