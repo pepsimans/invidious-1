@@ -132,5 +132,4 @@ networks:
     driver: overlay
     ipam:
       config:
-        - subnet: 10.0.110.0/24
-          gateway: 10.0.110.1
+        subnet: 10.0.110.0/24
