@@ -1,26 +1,5 @@
 [   
     {
-        "name": "IP limit, all paths",
-        "interval": 2,
-        "limit": 50,
-        "aggregations": ["Header:X-Forwarded-For"],
-        "actions": [
-            {"name": "block",
-            "params": {"message": "Rate limit exceeded, try again later."}}
-        ]
-    },
-    {
-        "name": "useragent limit, all paths",
-        "interval": 10,
-        "limit": 200,
-        "aggregations": ["Header:X-Forwarded-For", "Header:User-Agent"],
-        "stop": true,
-        "actions": [
-            {"name": "block",
-             "params": {"message": "Rate limit exceeded, try again later."}}
-        ]
-    },
-    {
         "name": "search",
         "filters": ["Param:q", "Path=^(/|/search)$"],
         "subrules": [
@@ -119,7 +98,6 @@
 
         ]
     },
-
     {
         "name": "video",
         "filters": ["Param:q", "Path=^(/|/watch)$"],
