@@ -1,3 +1,4 @@
+
 version: '3.8'
 
 services:
@@ -35,8 +36,8 @@ services:
     image: quay.io/invidious/invidious:latest
     hostname: invidious
     networks:
-      - database-backend
       - traefik-public
+      - database-backend
 #    logging:
 #      driver: none
     deploy:
@@ -71,7 +72,7 @@ services:
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
   
         # CSP Header middleware
-        - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src blob:" 
+        - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src blob:"
     environment:
       INVIDIOUS_CONFIG: |
         channel_threads: 4
@@ -93,7 +94,6 @@ services:
         default_user_preferences:
           dark_mode: true
           quality: dash
-    
 networks:
   traefik-public:
     external: true
