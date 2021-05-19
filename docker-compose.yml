@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
 
   server:
-    image: quay.io/invidious/invidious:latest
+    image: quay.io/invidious/invidious:44f30c0e056a7d9b57c4093f06f6f0a7ad8def05
     hostname: invidious
     networks:
       - backend
