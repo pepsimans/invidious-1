@@ -79,14 +79,12 @@ services:
           quality: dash
         domain: https://${INVIDIOUS_HOSTNAME}/
 
-  filtron:
-    image: dalf/filtron:latest
-    hostname: filtron
+  waf:
+    image: silkky/invidious-waf:latest
+    hostname: modsecurity
     networks:
       - backend
       - traefik-public
-    volumes:
-      - /mnt-gluster/config-1/invidious/rules.json:/etc/filtron/rules.json:rw
     deploy:
       mode: replicated
       replicas: 6
@@ -114,16 +112,12 @@ services:
         - "traefik.http.routers.invidious.service=invidious-service"
 
         # Service
-        - "traefik.http.services.invidious-service.loadbalancer.server.port=4040"
+        - "traefik.http.services.invidious-service.loadbalancer.server.port=80"
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
   
         # CSP Header middleware
         - "traefik.http.middlewares.invidious-headers.headers.contentSecurityPolicy=default-src 'self'; connect-src 'self'; font-src 'self' data: https://fonts.gstatic.com; form-action 'self'; img-src 'self' https://https; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
-    read_only: true
-    command: -listen 0.0.0.0:4040 -api 0.0.0.0:4041 -target invidious:3000
-    cap_drop:
-      - ALL
 
 networks:
   traefik-public:
