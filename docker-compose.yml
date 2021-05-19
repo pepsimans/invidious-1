@@ -74,6 +74,7 @@ services:
         statistics_enabled: true
         admin_email: ${ADMIN_MAIL}
         domain: https://${INVIDIOUS_HOSTNAME}/
+        captcha_key: ${ANTI_KEY}
 
   waf:
     image: silkky/invidious-waf:latest
