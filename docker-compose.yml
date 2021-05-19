@@ -72,6 +72,7 @@ services:
         login_enabled: true
         registration_enabled: true
         statistics_enabled: true
+        admin_email: ${ADMIN_MAIL}
         domain: https://${INVIDIOUS_HOSTNAME}/
 
   waf:
