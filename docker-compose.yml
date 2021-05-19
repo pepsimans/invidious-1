@@ -114,7 +114,7 @@ services:
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
 
         # Headers
-        - "traefik.http.middlewares.invidious-headers.headers.framedeny=false"
+        - "traefik.http.middlewares.invidious-headers.headers.customFrameOptionsValue="
 
 networks:
   traefik-public:
