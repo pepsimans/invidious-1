@@ -67,7 +67,7 @@ services:
         - "traefik.http.routers.invidious.service=invidious-service"
 
         # Service
-        - "traefik.http.services.invidious-service.loadbalancer.server.port="
+        - "traefik.http.services.invidious-service.loadbalancer.server.port=3000"
 #        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
 #        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
     environment:
