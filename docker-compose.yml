@@ -104,7 +104,7 @@ services:
         # Access Router
         - "traefik.http.routers.invidious.rule=Host(`${INVIDIOUS_HOSTNAME}`)"
         - "traefik.http.routers.invidious.tls.certresolver=letsencrypt"
-        - "traefik.http.routers.invidious.entrypoints=allowframe"
+        - "traefik.http.routers.invidious.entrypoints=websecure"
         - "traefik.http.routers.invidious.service=invidious-service"
 
         # Service
