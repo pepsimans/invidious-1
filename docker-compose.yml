@@ -59,8 +59,8 @@ services:
     environment:
       INVIDIOUS_CONFIG: |
         channel_threads: 4
-        check_tables: true
         feed_threads: 4
+        check_tables: true
         db:
           user: kemal
           password: ${DATABASE_PASSWORD}
@@ -72,9 +72,6 @@ services:
         login_enabled: true
         registration_enabled: true
         statistics_enabled: true
-        default_user_preferences:
-          dark_mode: true
-          quality: dash
         domain: https://${INVIDIOUS_HOSTNAME}/
 
   waf:
