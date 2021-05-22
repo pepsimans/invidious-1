@@ -89,7 +89,7 @@ services:
         admin_email: ${ADMIN_MAIL} 
         https_only: true 
         external_port: 443 
-        domain: https://${INVIDIOUS_HOSTNAME}/
+        domain: ${INVIDIOUS_HOSTNAME}
         captcha_key: ${ANTI_KEY} 
 
 networks:
