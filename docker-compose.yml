@@ -37,53 +37,9 @@ services:
     image: quay.io/invidious/invidious:latest
     hostname: invidious
     networks:
-      - backend
       - database-backend
 #    logging:
 #      driver: none
-    deploy:
-      mode: replicated
-      replicas: 3
-      restart_policy:
-        condition: any
-      update_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-      rollback_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-    environment:
-      INVIDIOUS_CONFIG: |
-        channel_threads: 1 
-        feed_threads: 1 
-        check_tables: true 
-        db:
-          user: kemal 
-          password: ${DATABASE_PASSWORD} 
-          host: database 
-          port: 5432 
-          dbname: invidious 
-        full_refresh: false 
-        popular_enabled: true 
-        login_enabled: true 
-        registration_enabled: true 
-        statistics_enabled: true 
-        admin_email: ${ADMIN_MAIL} 
-        https_only: true 
-        external_port: 443 
-        domain: https://${INVIDIOUS_HOSTNAME} 
-        captcha_key: ${ANTI_KEY} 
-
-  waf:
-    image: silkky/invidious-waf:latest
-    hostname: modsecurity
-    networks:
-      - backend
-      - traefik-public
     deploy:
       mode: replicated
       replicas: 3
@@ -110,14 +66,33 @@ services:
         - "traefik.http.routers.invidious.service=invidious-service"
 
         # Service
-        - "traefik.http.services.invidious-service.loadbalancer.server.port=80"
+        - "traefik.http.services.invidious-service.loadbalancer.server.port=3000"
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
+    environment:
+      INVIDIOUS_CONFIG: |
+        channel_threads: 1 
+        feed_threads: 1 
+        check_tables: true 
+        db:
+          user: kemal 
+          password: ${DATABASE_PASSWORD} 
+          host: database 
+          port: 5432 
+          dbname: invidious 
+        full_refresh: false 
+        popular_enabled: true 
+        login_enabled: true 
+        registration_enabled: true 
+        statistics_enabled: true 
+        admin_email: ${ADMIN_MAIL} 
+        https_only: true 
+        external_port: 443 
+        domain: https://${INVIDIOUS_HOSTNAME} 
+        captcha_key: ${ANTI_KEY} 
 
 networks:
   traefik-public:
     external: true
   database-backend:
-    driver: overlay
-  backend:
     driver: overlay
