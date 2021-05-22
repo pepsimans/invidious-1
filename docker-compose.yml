@@ -90,7 +90,7 @@ services:
         https_only: true 
         external_port: 443 
         domain: ${INVIDIOUS_HOSTNAME}
-        captcha_key: ${ANTI_KEY} "  
+        captcha_key: ${ANTI_KEY}
 
 networks:
   traefik-public:
