@@ -91,7 +91,7 @@ services:
         external_port: 443
         domain: ${INVIDIOUS_HOSTNAME}
         captcha_key: ${ANTI_KEY}
-        banner: "<a href="https://silkky.cloud/contribute#Donate" target="_blank">Support this instance</a>"
+        banner: "[Support this instance](https://silkky.cloud/contribute#Donate)"
 
 networks:
   traefik-public:
