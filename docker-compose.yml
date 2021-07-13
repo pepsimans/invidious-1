@@ -81,6 +81,9 @@ services:
           host: database
           port: 5432
           dbname: invidious
+        default_user_preferences:
+          quality: dash
+          quality_dash: 720p
         full_refresh: false
         popular_enabled: true
         login_enabled: true
