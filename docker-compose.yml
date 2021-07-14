@@ -121,8 +121,7 @@ services:
     environment: 
       - USE_REVERSE_PROXY=yes
       - PROXY_REAL_IP=yes
-      - SWARM_MODE=yes
-      - REVERSE_PROXY_URL_1=/
+      - REVERSE_PROXY_URL=/
       - REVERSE_PROXY_HOST=http://invidious:3000/
       # Antibot
       - USE_ANTIBOT=javascript
