@@ -127,7 +127,8 @@ services:
       - PROXY_REAL_IP_HEADER=X-Forwarded-For
       # Antibot
       - USE_ANTIBOT=javascript
-      # Unblock TOR
+      # Unblock TOR and proxies
+      - BLOCK_PROXIES=no
       - BLOCK_TOR_EXIT_NODE=no
 
 networks:
