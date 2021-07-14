@@ -124,7 +124,7 @@ services:
       - REVERSE_PROXY_URL=/
       - REVERSE_PROXY_HOST=http://invidious:3000/
       # Antibot
-      - USE_ANTIBOT=javascript
+      - USE_ANTIBOT=cookie
       # Unblock TOR
       - BLOCK_TOR_EXIT_NODE=no
 
