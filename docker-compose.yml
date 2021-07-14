@@ -38,7 +38,7 @@ services:
     hostname: invidious
     networks:
       - database-backend
-      - traefik-public
+      - backend
 #    logging:
 #      driver: none
     deploy:
@@ -56,20 +56,6 @@ services:
         delay: 10s
         order: stop-first
         monitor: 10s
-      labels:
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik-public"
-
-        # Access Router
-        - "traefik.http.routers.invidious.rule=Host(`${INVIDIOUS_HOSTNAME}`)"
-        - "traefik.http.routers.invidious.tls.certresolver=letsencrypt"
-        - "traefik.http.routers.invidious.entrypoints=websecure"
-        - "traefik.http.routers.invidious.service=invidious-service"
-
-        # Service
-        - "traefik.http.services.invidious-service.loadbalancer.server.port=3000"
-        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
-        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
     environment:
       INVIDIOUS_CONFIG: |
         channel_threads: 1
@@ -97,8 +83,55 @@ services:
         banner: |
           <a href="https://silkky.cloud/contribute#Donate" target="_blank">Support this instance</a>
 
+  security:
+    image: bunkerity/bunkerized-nginx
+    hostname: security
+    networks: 
+      - backend
+      - traefik-public
+    deploy:
+      mode: replicated
+      replicas: 6
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+        monitor: 10s
+      rollback_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+        monitor: 10s
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-public"
+
+        # Access Router
+        - "traefik.http.routers.invidious.rule=Host(`${INVIDIOUS_HOSTNAME}`)"
+        - "traefik.http.routers.invidious.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.invidious.entrypoints=websecure"
+        - "traefik.http.routers.invidious.service=invidious-service"
+
+        # Service
+        - "traefik.http.services.invidious-service.loadbalancer.server.port=8080"
+        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
+        - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
+    environment: 
+      USE_REVERSE_PROXY: yes
+      PROXY_REAL_IP: yes
+      REVERSE_PROXY_URL_1: /
+      REVERSE_PROXY_HOST: http://invidious:3000/
+      # Antibot
+      USE_ANTIBOT: javascript
+      # Unblock TOR
+      BLOCK_TOR_EXIT_NODE: no
+
 networks:
   traefik-public:
     external: true
+  backend:
+    driver: overlay
   database-backend:
     driver: overlay
