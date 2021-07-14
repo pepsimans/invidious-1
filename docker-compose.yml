@@ -124,7 +124,6 @@ services:
       - REVERSE_PROXY_HOST=http://invidious:3000/
       # Reverse proxy
       - PROXY_REAL_IP=yes
-      - PROXY_REAL_IP_FROM=10.0.0.0/24
       - PROXY_REAL_IP_HEADER=X-Forwarded-For
       # Antibot
       - USE_ANTIBOT=javascript
