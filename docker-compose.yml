@@ -119,14 +119,15 @@ services:
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
     environment: 
-      - "USE_REVERSE_PROXY=yes"
-      - "PROXY_REAL_IP=yes"
-      - "REVERSE_PROXY_URL_1=/"
-      - "REVERSE_PROXY_HOST=http://invidious:3000/"
+      - USE_REVERSE_PROXY=yes
+      - PROXY_REAL_IP=yes
+      - SWARM_MODE=yes
+      - REVERSE_PROXY_URL_1=/
+      - REVERSE_PROXY_HOST=http://invidious:3000/
       # Antibot
-      - "USE_ANTIBOT=javascript"
+      - USE_ANTIBOT=javascript
       # Unblock TOR
-      - "BLOCK_TOR_EXIT_NODE=no"
+      - BLOCK_TOR_EXIT_NODE=no
 
 networks:
   traefik-public:
