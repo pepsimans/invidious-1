@@ -141,6 +141,10 @@ services:
       - USE_GZIP=yes
       # Client cache
       - USE_CLIENT_CACHE=yes
+      # CSP
+      - "CONTENT_SECURITY_POLICY=default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self' blob: https://*.googlevideo.com:443 https://*.youtube.com:443; child-src 'self' blob:; frame-src 'self'; frame-ancestors 'none'"
+      # Remove XFO
+      - REMOVE_HEADERS=X-Frame-Options
 
 networks:
   traefik-public:
