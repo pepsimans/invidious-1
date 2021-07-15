@@ -118,7 +118,7 @@ services:
         - "traefik.http.routers.invidious-challenge.rule=Host(`${INVIDIOUS_HOSTNAME}`) && Path(`/challenge`)"
         - "traefik.http.routers.invidious-challenge.tls.certresolver=letsencrypt"
         - "traefik.http.routers.invidious-challenge.entrypoints=websecure"
-        = "traefik.http.routers.invidious-challenge.middlewares=invidious-challenge-headers"
+        - "traefik.http.routers.invidious-challenge.middlewares=invidious-challenge-headers"
         - "traefik.http.routers.invidious-challenge.service=invidious-service"
 
         # Challenge CSP
