@@ -120,8 +120,6 @@ services:
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
     cap_drop: 
       - ALL
-    security_opt: 
-      - no-new-privileges
     read_only: true
     environment: 
       - USE_REVERSE_PROXY=yes
