@@ -84,7 +84,7 @@ services:
           <a href="https://silkky.cloud/contribute#Donate" target="_blank">Support this instance</a>
 
   security:
-    image: bunkerity/bunkerized-nginx
+    image: bunkerity/bunkerized-nginx:latest
     hostname: security
     networks: 
       - backend
