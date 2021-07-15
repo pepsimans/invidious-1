@@ -137,6 +137,8 @@ services:
       - BLOCK_TOR_EXIT_NODE=no
       # Disable request limiting
       - USE_LIMIT_REQ=no
+      # Remove X-Frame-Options header
+      - REMOVE_HEADERS=X-Frame-Options
 
 networks:
   traefik-public:
