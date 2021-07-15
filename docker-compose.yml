@@ -127,7 +127,7 @@ services:
       - USE_REVERSE_PROXY=yes
       - REVERSE_PROXY_URL=/
       - REVERSE_PROXY_HOST=http://invidious:3000/
-      # Get real ip from traefik reverse proxy
+      # Get real ip from traefik
       - PROXY_REAL_IP=yes
       - PROXY_REAL_IP_HEADER=X-Forwarded-For
       # Antibot
@@ -137,8 +137,10 @@ services:
       - BLOCK_TOR_EXIT_NODE=no
       # Disable request limiting
       - USE_LIMIT_REQ=no
-      # Remove X-Frame-Options header and CSP
-      - REMOVE_HEADERS=X-Frame-Options Content-Security-Policy
+      # Compression
+      - USE_GZIP=yes
+      # Client cache
+      - USE_CLIENT_CACHE=yes
 
 networks:
   traefik-public:
