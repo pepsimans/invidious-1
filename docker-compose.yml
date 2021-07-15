@@ -137,10 +137,8 @@ services:
       - BLOCK_TOR_EXIT_NODE=no
       # Disable request limiting
       - USE_LIMIT_REQ=no
-      # Remove X-Frame-Options header
-      - REMOVE_HEADERS=X-Frame-Options
-      # Remove CSP header to use Invidious CSP
-      - REMOVE_HEADERS=Content-Security-Policy
+      # Remove X-Frame-Options header and CSP
+      - REMOVE_HEADERS=X-Frame-Options Content-Security-Policy
 
 networks:
   traefik-public:
