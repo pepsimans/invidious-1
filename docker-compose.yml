@@ -118,9 +118,6 @@ services:
         - "traefik.http.services.invidious-service.loadbalancer.server.port=8080"
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie=true"
         - "traefik.http.services.invidious-service.loadbalancer.sticky.cookie.secure=true"
-    cap_drop: 
-      - ALL
-    read_only: true
     environment: 
       - USE_REVERSE_PROXY=yes
       - REVERSE_PROXY_URL=/
