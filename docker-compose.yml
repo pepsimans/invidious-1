@@ -87,7 +87,7 @@ services:
       - traefik-public
     deploy:
       mode: replicated
-      replicas: 6
+      replicas: 5
       restart_policy:
         condition: any
       update_config:
@@ -126,6 +126,8 @@ services:
       - BLOCK_TOR_EXIT_NODE=no
       # Disable request limiting
       - USE_LIMIT_REQ=no
+      # Antibot
+      - USE_ANTIBOT=javascript
       # Compression
       - USE_GZIP=yes
       # Client cache
