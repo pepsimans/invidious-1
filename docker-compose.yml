@@ -127,7 +127,7 @@ services:
       # Disable request limiting
       - USE_LIMIT_REQ=no
       # Antibot
-      - USE_ANTIBOT=javascript
+      - USE_ANTIBOT=cookie
       # Compression
       - USE_GZIP=yes
       # Client cache
