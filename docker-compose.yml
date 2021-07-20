@@ -98,8 +98,8 @@ volumes:
     driver: local
     driver_opts: 
       type: cifs
-      device: //u262698.your-storagebox.de/backup/apps/invidious
-      o: "addr=u262698.your-storagebox.de,username=u262698,password=StCFzfBnp50mp6Hr,file_mode=0700,dir_mode=0700,uid=70,gid=70"
+      device: ${CIFS_SHARE}
+      o: "addr=${CIFS_DOMAIN},username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0700,dir_mode=0700,uid=70,gid=70"
 
 networks:
   traefik-public:
