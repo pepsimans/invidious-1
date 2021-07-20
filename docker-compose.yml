@@ -11,10 +11,10 @@ services:
     networks:
       - database-backend
     deploy:
-      replicas: 1
       placement:
         constraints:
           - node.role == manager
+          - node.labels.primary-manager == true
       restart_policy:
         condition: any
       update_config:
@@ -95,11 +95,6 @@ services:
 
 volumes:
   database:
-    driver: local
-    driver_opts: 
-      type: cifs
-      device: ${CIFS_SHARE}
-      o: "addr=${CIFS_DOMAIN},username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0700,dir_mode=0700,uid=70,gid=70"
 
 networks:
   traefik-public:
