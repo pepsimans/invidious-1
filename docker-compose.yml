@@ -13,8 +13,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == manager
-          - node.labels.primary-manager == true
+          - node.labels.database-server == true
       restart_policy:
         condition: any
       update_config:
@@ -95,6 +94,7 @@ services:
 
 volumes:
   database:
+    external: true
 
 networks:
   traefik-public:
