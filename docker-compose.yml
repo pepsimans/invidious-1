@@ -6,8 +6,10 @@ services:
     image: postgres:10-alpine
     hostname: database
     volumes:
-      - database:/var/lib/postgresql/data
+      - ./invidious-database:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
+      - ./sql:/config/sql
+      - ./init-invidious-db.sh:/docker-entrypoint-initdb.d/init-invidious-db.sh
     networks:
       - database-backend
     deploy:
@@ -39,7 +41,7 @@ services:
       - traefik-public
     deploy:
       mode: replicated
-      replicas: 5
+      replicas: 6
       restart_policy:
         condition: any
       update_config:
@@ -91,10 +93,6 @@ services:
         domain: ${INVIDIOUS_HOSTNAME}
         banner: |
           <a href="https://silkky.cloud/contribute#Donate" target="_blank">Support this instance</a>
-
-volumes:
-  database:
-    external: true
 
 networks:
   traefik-public:
